@@ -1,0 +1,28 @@
+﻿@model PizzaViewModel
+
+<div class="row gx-5 bg-light text-black-50">
+    <div class="d-sm-inline-flex ">
+        <img src="~/Images/@Model.ImageURL" />
+        <div class="p-2 m-auto">
+            <h6>@Model.PizzaId</h6>
+            <h4>@Model.Name</h4>
+            <p>Price: @Model.Price.ToString("c")</p>
+            @foreach (Topping topping in @Model.Toppings)
+            {
+                <p>@topping.Name</p>
+            }
+        </div>
+        <div class="addToCart text-right">
+            <p class="button">
+                <a class="btn btn-success" id="cartButton"
+                   asp-controller="ShoppingCart"
+                   asp-action="AddToShoppingCart"
+                   asp-route-pizzaId="@Model.PizzaId">
+                    Add to cart
+                </a>
+            </p>
+        </div>
+    </div>
+</div>
+
+

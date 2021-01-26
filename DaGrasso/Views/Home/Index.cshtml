@@ -1,0 +1,11 @@
+﻿<div>
+    <h2>All Pizzas that we currently have </h2>
+</div>
+@{
+    foreach (PizzaViewModel pizza in Model)
+    {
+
+        @await Html.PartialAsync("PizzaSummary", pizza)
+
+    }
+}
