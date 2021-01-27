@@ -11,65 +11,76 @@ namespace DrinkAndGo.Controllers
 {
     public class AccountController : Microsoft.AspNetCore.Mvc.Controller
     {
-        private readonly IAccountRepository _accountRepository;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public AccountController(IAccountRepository accountRepository)
+
+        public AccountController(UserManager<ApplicationUser> userManager,
+                                 SignInManager<ApplicationUser>  signInManager )
         {
-            _accountRepository = accountRepository;
+           this._userManager = userManager;
+            this._signInManager = signInManager;
         }
 
-        [Route("sigup")]
-        public IActionResult Signup() => View();
+        [HttpGet]
+        public async Task<IActionResult> Login()
+        {
+           return View();
+        }
 
-        
-        [Route("sigup")]
         [HttpPost]
-        public async Task<IActionResult> Signup(SignUpUserModel userModel)
+        public async Task<IActionResult> Login(LoginViewModel model)
         {
-            if (ModelState.IsValid) 
+            if (ModelState.IsValid)
             {
-                var result = await _accountRepository.CreateUserAsync(userModel);
-               if(!result.Succeeded)
-                {
-                    foreach(var errorMessage in result.Errors) 
-                    {
-                        ModelState.AddModelError("", errorMessage.Description);
-                    }
-                    return RedirectToAction("Login", "Account");
-                }
-                ModelState.Clear();   
-            }
-            return View();
-        }
-        [Route("login")]
-        public IActionResult Login()
-        {
-          
-            return  View();
-
-        }
-        [Route("login")]
-        [HttpPost]
-        public async Task<IActionResult> Login(SignInModel signInModel)
-        {
-            if(ModelState.IsValid)
-            {
-                var result=  await _accountRepository.PasswordSignInAsync(signInModel);
-                if (result.Succeeded) 
+                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password,
+                    model.RememberMe, false);
+                if (result.Succeeded)
                 {
                     return RedirectToAction("Index", "Home");
                 }
-                ModelState.AddModelError("", "Invalid Credentials");
+                ModelState.AddModelError(string.Empty,"Invalid Login Attempt");
             }
-            return View(signInModel);
-
+            return View();
         }
 
-        [Route("logout")]
+        
+        [HttpGet]
         public async Task<IActionResult> Logout()
         {
-            await _accountRepository.SignOutAsync();
+            await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
+        }
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser()
+                {
+                    UserName = model.Email,
+                    Email = model.Email
+                };
+                var result = await _userManager.CreateAsync(user, model.Password);
+
+                if (result.Succeeded)
+                {
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    return RedirectToAction("Index", "Home");
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("",error.Description);
+                }
+            }
+            return View();
         }
     }
 }

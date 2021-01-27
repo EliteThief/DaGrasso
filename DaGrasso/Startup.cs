@@ -11,6 +11,8 @@ using DaGrasso.Data.Repositories;
 using DaGrasso.Interfaces;
 using System;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace DaGrasso
 {
@@ -33,11 +35,16 @@ namespace DaGrasso
             services.AddDbContext<AppDbContext>(options =>
                  options.UseSqlServer(_configurationRoot.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                    .AddEntityFrameworkStores<AppDbContext>();
+            services.AddIdentity<ApplicationUser, IdentityRole>
+                    (options => options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<AppDbContext>();
+            services.AddControllersWithViews();
+           
+
 
             services.Configure<IdentityOptions>(options =>
             {
+                options.SignIn.RequireConfirmedAccount = false;
                 options.Password.RequiredLength = 5;
                 options.Password.RequiredUniqueChars = 1;
                 options.Password.RequireDigit = false;
@@ -54,8 +61,7 @@ namespace DaGrasso
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped(sp => ShoppingCart.GetCart(sp));
-            services.AddScoped<IAccountRepository, AccountRepository>();
-            
+
             services.AddControllersWithViews();
             services.AddMemoryCache();
             services.AddSession();
@@ -74,25 +80,26 @@ namespace DaGrasso
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSession();
             app.UseRouting();
 
             app.UseAuthentication();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-
             });
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "pizzadetails",
                     pattern: "Home/AddToShoppingCart/{pizzaId?}"
-                    );
+                );
 
                 endpoints.MapControllerRoute(
                     name: "default",
@@ -100,6 +107,7 @@ namespace DaGrasso
 
             });
             DbInitializer.Seed(serviceProvider);
+
         }
     }
 }

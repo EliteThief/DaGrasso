@@ -18,7 +18,6 @@ namespace Pizzeria.Components
         {
             var items = _shoppingCart.GetShoppingCartItems();
             _shoppingCart.ShoppingCartItems = items;
-            System.Diagnostics.Debug.WriteLine(_shoppingCart.GetShoppingCartItems()+" UTKAJ JUZ");
 
             var shoppingCartViewModel = new ShoppingCartViewModel
             {

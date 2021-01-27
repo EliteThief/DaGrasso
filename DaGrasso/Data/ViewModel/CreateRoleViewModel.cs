@@ -10,6 +10,6 @@ namespace DaGrasso.Data.Models
     public class CreateRoleViewModel :IdentityRole
     {
         [Required]
-        public int RoleName { get; set; }
+        public string RoleName { get; set; }
     }
 }

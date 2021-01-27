@@ -6,14 +6,15 @@ using System.Threading.Tasks;
 
 namespace DaGrasso.Data.Models
 {
-    public class SignInModel
+    public class LoginViewModel
     {
-        [Required,EmailAddress]
-        public string Emial { get; set; }
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }
-        [Display(Name ="Remember Me")]
+        [Display(Name = "Remember Me")]
         public bool RememberMe { get; set; }
     }
 }
