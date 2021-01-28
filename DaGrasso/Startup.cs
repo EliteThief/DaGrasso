@@ -56,7 +56,6 @@ namespace DaGrasso
 
             services.AddTransient<IPizzaRepository, PizzaRepository>();
             services.AddTransient<IToppingRepository, ToppingRepository>();
-            services.AddTransient<IPizzaToppingRepository, PizzaToppingsRepositories>();
             services.AddTransient<IOrderRepository, OrderRepository>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -125,7 +124,7 @@ namespace DaGrasso
                     pattern: "{controller=Home}/{action=Index}/{id?}");
 
             });
-            DbInitializer.Seed(serviceProvider);
+            DbInitializer.SeedAsync(serviceProvider);
 
         }
     }

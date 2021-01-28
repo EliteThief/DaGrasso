@@ -11,6 +11,6 @@ namespace DaGrasso.Data.ViewModel
         public string Name { get; set; }
         public double Price { get; set; }
         public string ImageURL { get; set; }
-        public virtual ICollection<Topping> Toppings { get; set; } 
+        public virtual ICollection<Topping> Toppings { get; set; }
     }
 }

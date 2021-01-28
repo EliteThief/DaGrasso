@@ -1,0 +1,23 @@
+﻿@model List<OrderDetail>
+@{
+    ViewData["Title"] = $"Orders to make";
+}
+
+        <div class="card">
+            <div class="card-header">
+                <h1>Zamowienia</h1>
+            </div>
+            <div class="card-body">
+            @for (int i = 0; i < @Model.Count; i++)
+            {
+                <h1>@Model[i].Pizza.Name * @Model[i].Amount</h1>
+            }
+            
+            </div>
+            <div class="card-footer">
+                <a asp-action="CreatePizza"  style="width: auto" class="btn btn-primary">
+                        Create Pizza
+                    </a>
+            </div>
+        </div>
+    

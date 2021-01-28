@@ -6,26 +6,27 @@ using DaGrasso.Models;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace DaGrasso.Controllers
 {
     public class HomeController : Microsoft.AspNetCore.Mvc.Controller
     {
+        private readonly AppDbContext _context;
         private readonly ILogger<HomeController> _logger;
         private readonly IPizzaRepository _pizzaRepository;
         private readonly IToppingRepository _toppingRepository;
-        private readonly IPizzaToppingRepository _pizzaToppingRepository;
 
 
         public HomeController(ILogger<HomeController> logger,
             IPizzaRepository pizzaRepository,
-            IPizzaToppingRepository pizzaToppingRepository,
-            IToppingRepository toppingRepository)
+            IToppingRepository toppingRepository,
+            AppDbContext context)
         {
             _logger = logger;
             _pizzaRepository = pizzaRepository;
             _toppingRepository = toppingRepository;
-            _pizzaToppingRepository = pizzaToppingRepository;
+            _context = context;
         }
 
         public ViewResult Index()
@@ -33,19 +34,9 @@ namespace DaGrasso.Controllers
             List<PizzaViewModel> pizzasView = new List<PizzaViewModel>();
             List<Pizza> pizzas = _pizzaRepository.Pizzas.ToList();
             List<Topping> toppings = _toppingRepository.Toppings.ToList();
-            List<PizzaToppings> pizzaToppings = _pizzaToppingRepository.PizzasToppings.ToList();
 
 
-            var result = pizzas.Select(pizza => new PizzaViewModel
-            {
-                PizzaId = pizza.PizzaId,
-                Name = pizza.Name,
-                ImageURL = pizza.ImageURL,
-                Price = pizza.Price,
-                Toppings = pizza.Toppings.Where(pt => pt.PizzaId == pizza.PizzaId)
-                             .Select(pt => pt.Topping).ToList()
-            }); ;
-
+            var result = _context.Pizzas.Include(t=>t.Toppings).ToList();
             return View(result);
         }
         [HttpPost]

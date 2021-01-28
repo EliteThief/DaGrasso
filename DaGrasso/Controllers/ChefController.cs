@@ -10,24 +10,35 @@ using DaGrasso.Data.ViewModel;
 using DaGrasso.Interfaces;
 using DaGrasso.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 
 namespace DaGrasso.Controllers
 {
     [Authorize(Roles="Chef")]
     public class Chef : Controller
     {
-        private readonly OrderRepository _orderRepository;
-        private readonly PizzaRepository _pizzaRepository;
-        
-        public Chef(OrderRepository orderRepository,PizzaRepository pizzaRepository)
+        private readonly AppDbContext _context;
+        private readonly IPizzaRepository _pizzaRepository;
+        private readonly IToppingRepository _toppingRepository;
+
+        public Chef(AppDbContext context,IPizzaRepository pizzaRepository,IToppingRepository toppingRepository)
         {
-            _orderRepository = orderRepository;
+            _context = context;
             _pizzaRepository = pizzaRepository;
+            _toppingRepository = toppingRepository;
         }
+
+        public ViewResult Index()
+        {
+            var result = _context.OrderDetails.Include(x => x.Pizza).Include(x => x.Order).ToList();  
+            
+
+            return View(result);
+        }
+
         [HttpGet]
         public IActionResult CreatePizza()
         {
-
             return View();
         }
 
@@ -41,7 +52,7 @@ namespace DaGrasso.Controllers
                     Name = model.Name,
                     Price = model.Price,
                     ImageURL = model.ImageURL,
-                    Toppings = model.Toppings
+                   
                 };
 
                 var result =  _pizzaRepository.AddPizza(pizza);

@@ -1,17 +1,20 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using DaGrasso.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
-
+using DaGrasso.Data.Models;
+using Microsoft.AspNetCore.Identity;
 
 
 namespace DaGrasso
 {
     public class DbInitializer
     {
-        public static void Seed(IServiceProvider applicationBuilder)
+        public static async System.Threading.Tasks.Task SeedAsync(IServiceProvider applicationBuilder)
         {
             AppDbContext context = applicationBuilder.GetRequiredService<AppDbContext>();
+            
 
             Topping sosPomidorowy = new Topping { Name = "Sos Pomidorowy" };
             Topping Mozarella = new Topping { Name = "Mozarella" };
@@ -38,125 +41,137 @@ namespace DaGrasso
                 context.Toppings.Add(Ananas);
             }
             context.SaveChanges();
-            if (!context.Pizzas.Any())
+
+
+            Pizza Margherita = new Pizza
             {
-                context.Pizzas.AddRange(
-                new Pizza
-                {
-                    Name = "Margherita",
-                    Price = 18.0,
-                    ImageURL = "Margherita.png",
-                },
-                new Pizza
-                {
-                    Name = "Funghi",
-                    Price = 20.00,
-                    ImageURL = "Funghi.png",
-                },
-                new Pizza
-                {
-                    Name = "Cotto",
-                    Price = 20.00,
-                    ImageURL = "Cotto.png",
-                },
-                new Pizza
-                {
-                    Name = "Hawaii",
-                    Price = 20.00,
-                    ImageURL = "Hawaii.png",
-                },
-                new Pizza
+                Name = "Margherita",
+                Price = 18.0,
+                ImageURL = "Margherita.png",
+            };
+
+              Pizza Funghi = new Pizza
+              {
+                  Name = "Funghi",
+                  Price = 20.00,
+                  ImageURL = "Funghi.png",
+              };
+              Pizza Cotto = new Pizza
+              {
+                  Name = "Cotto",
+                  Price = 20.00,
+                  ImageURL = "Cotto.png",
+              };
+              Pizza Hawaii = new Pizza
+              {
+                  Name = "Hawaii",
+                  Price = 20.00,
+                  ImageURL = "Hawaii.png",
+              };
+              Pizza Verona =  new Pizza
                 {
                     Name = "Verona",
                     Price = 20.00,
                     ImageURL = "Verona.png",
-                });
-                context.SaveChanges();
-            }
-            if (!context.PizzaToppings.Any())
+                };
+
+            Margherita.Toppings = new List<PizzaTopping>
             {
-                context.PizzaToppings.AddRange(
-                new PizzaToppings
+                new PizzaTopping
                 {
-                    PizzaId = 1,
-                    ToppingId = 1
+                    Pizza = Margherita,
+                    Topping = Mozarella,
                 },
-                new PizzaToppings
+                new PizzaTopping
                 {
-                    PizzaId = 1,
-                    ToppingId = 3
+                    Pizza = Margherita,
+                    Topping = sosPomidorowy,
+                }
+            };
+            Funghi.Toppings = new List<PizzaTopping>
+            {
+                new PizzaTopping
+                {
+                    Pizza = Funghi,
+                    Topping = Mozarella,
                 },
-                new PizzaToppings
+                new PizzaTopping
                 {
-                    PizzaId = 2,
-                    ToppingId = 1
+                    Pizza = Funghi,
+                    Topping = sosPomidorowy,
                 },
-                new PizzaToppings
+                new PizzaTopping
                 {
-                    PizzaId = 2,
-                    ToppingId = 3
+                Pizza = Funghi,
+                Topping = Pieczarki,
+                }
+            };
+            Verona.Toppings = new List<PizzaTopping>
+            {
+                new PizzaTopping
+                {
+                    Pizza = Verona,
+                    Topping = Mozarella,
                 },
-                new PizzaToppings
+                new PizzaTopping
                 {
-                    PizzaId = 3,
-                    ToppingId = 1
+                    Pizza = Verona,
+                    Topping = sosPomidorowy,
                 },
-                new PizzaToppings
+                new PizzaTopping
                 {
-                    PizzaId = 3,
-                    ToppingId = 3
+                    Pizza = Verona,
+                    Topping = Salami,
+                }
+            };
+            Cotto.Toppings = new List<PizzaTopping>
+            {
+                new PizzaTopping
+                {
+                    Pizza = Cotto,
+                    Topping = Mozarella,
                 },
-                new PizzaToppings
+                new PizzaTopping
                 {
-                    PizzaId = 4,
-                    ToppingId = 1
+                    Pizza = Cotto,
+                    Topping = sosPomidorowy,
                 },
-                new PizzaToppings
+                new PizzaTopping
                 {
-                    PizzaId = 4,
-                    ToppingId = 3
+                    Pizza = Cotto,
+                    Topping = Szynka,
+                }
+            };
+            Hawaii.Toppings = new List<PizzaTopping>
+            {
+                new PizzaTopping
+                {
+                    Pizza = Hawaii,
+                    Topping = Mozarella,
                 },
-                new PizzaToppings
+                new PizzaTopping
                 {
-                    PizzaId = 5,
-                    ToppingId = 1
+                    Pizza = Hawaii,
+                    Topping = sosPomidorowy,
                 },
-                new PizzaToppings
+                new PizzaTopping
                 {
-                    PizzaId = 5,
-                    ToppingId = 3
+                    Pizza = Hawaii,
+                    Topping = Szynka,
                 },
-                new PizzaToppings
+                new PizzaTopping
                 {
-                    PizzaId = 2,
-                    ToppingId = 4
-                },
-                new PizzaToppings
-                {
-                    PizzaId = 3,
-                    ToppingId = 5
-                },
-                new PizzaToppings
-                {
-                    PizzaId = 4,
-                    ToppingId = 5
-                },
-                new PizzaToppings
-                {
-                    PizzaId = 4,
-                    ToppingId = 10
-                },
-                new PizzaToppings
-                {
-                    PizzaId = 5,
-                    ToppingId = 2
-                });
+                    Pizza = Hawaii,
+                    Topping = Ananas,
+                }
+            };
+
+            if (!context.Pizzas.Any())
+            {
+                context.Pizzas.AddRange(Margherita, Funghi, Cotto, Verona, Hawaii);
                 context.SaveChanges();
             }
 
-
-
-            context.SaveChanges();
         }
     }
 }

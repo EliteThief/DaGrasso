@@ -26,6 +26,9 @@ namespace DaGrasso.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -58,7 +61,7 @@ namespace DaGrasso.Migrations
                     BuildingNumber = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     HouseNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ZipCode = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(14)", maxLength: 14, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     OrderTotal = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     OrderPlaced = table.Column<DateTime>(type: "datetime2", nullable: false)
@@ -252,25 +255,23 @@ namespace DaGrasso.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PizzaToppings",
+                name: "PizzaTopping",
                 columns: table => new
                 {
-                    PizzaToppingsId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
                     PizzaId = table.Column<int>(type: "int", nullable: false),
                     ToppingId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PizzaToppings", x => x.PizzaToppingsId);
+                    table.PrimaryKey("PK_PizzaTopping", x => new { x.PizzaId, x.ToppingId });
                     table.ForeignKey(
-                        name: "FK_PizzaToppings_Pizzas_PizzaId",
+                        name: "FK_PizzaTopping_Pizzas_PizzaId",
                         column: x => x.PizzaId,
                         principalTable: "Pizzas",
                         principalColumn: "PizzaId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PizzaToppings_Toppings_ToppingId",
+                        name: "FK_PizzaTopping_Toppings_ToppingId",
                         column: x => x.ToppingId,
                         principalTable: "Toppings",
                         principalColumn: "ToppingId",
@@ -327,13 +328,8 @@ namespace DaGrasso.Migrations
                 column: "PizzaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PizzaToppings_PizzaId",
-                table: "PizzaToppings",
-                column: "PizzaId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PizzaToppings_ToppingId",
-                table: "PizzaToppings",
+                name: "IX_PizzaTopping_ToppingId",
+                table: "PizzaTopping",
                 column: "ToppingId");
 
             migrationBuilder.CreateIndex(
@@ -363,7 +359,7 @@ namespace DaGrasso.Migrations
                 name: "OrderDetails");
 
             migrationBuilder.DropTable(
-                name: "PizzaToppings");
+                name: "PizzaTopping");
 
             migrationBuilder.DropTable(
                 name: "ShoppingCartItems");

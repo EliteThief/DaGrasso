@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using DaGrasso.Data.Models;
+using DaGrasso.Models;
 
 namespace DaGrasso
 {
@@ -8,7 +10,7 @@ namespace DaGrasso
         public string Name { get; set; }
         public double Price { get; set; }
         public string ImageURL { get; set; }
-        public virtual ICollection<PizzaToppings> Toppings { get; set; } = new List<PizzaToppings>();
+        public ICollection<PizzaTopping> Toppings { get; set; }
 
 
     }

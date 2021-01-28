@@ -1,8 +1,9 @@
-﻿<div>
+﻿@model List<DaGrasso.Pizza>
+<div>
     <h2>All Pizzas that we currently have </h2>
 </div>
 @{
-    foreach (PizzaViewModel pizza in Model)
+    foreach (var pizza in Model)
     {
 
         @await Html.PartialAsync("PizzaSummary", pizza)

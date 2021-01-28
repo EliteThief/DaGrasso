@@ -18,7 +18,7 @@ namespace DaGrasso.Data.Repositories
             _appDbContext = appDbContext;
             _shoppingCart = shoppingCart;
         }
-
+        public List<OrderDetail> Orders { get; set; }
 
         public void CreateOrder(Order order)
         {

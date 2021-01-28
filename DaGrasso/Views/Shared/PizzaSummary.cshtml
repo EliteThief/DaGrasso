@@ -1,16 +1,17 @@
-﻿@model PizzaViewModel
+﻿@model DaGrasso.Pizza
 
 <div class="row gx-5 bg-light text-black-50">
     <div class="d-sm-inline-flex ">
         <img src="~/Images/@Model.ImageURL" />
         <div class="p-2 m-auto">
-            <h6>@Model.PizzaId</h6>
+            
             <h4>@Model.Name</h4>
             <p>Price: @Model.Price.ToString("c")</p>
-            @foreach (Topping topping in @Model.Toppings)
+            @foreach (var topping in Model.Toppings)
             {
-                <p>@topping.Name</p>
+                <p>@topping.Topping.Name</p>
             }
+
         </div>
         <div class="addToCart text-right">
             <p class="button">

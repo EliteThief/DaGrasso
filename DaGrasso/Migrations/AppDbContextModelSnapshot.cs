@@ -176,6 +176,21 @@ namespace DaGrasso.Migrations
                     b.ToTable("OrderDetails");
                 });
 
+            modelBuilder.Entity("DaGrasso.Data.Models.PizzaTopping", b =>
+                {
+                    b.Property<int>("PizzaId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ToppingId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PizzaId", "ToppingId");
+
+                    b.HasIndex("ToppingId");
+
+                    b.ToTable("PizzaTopping");
+                });
+
             modelBuilder.Entity("DaGrasso.Data.Models.ShoppingCartItem", b =>
                 {
                     b.Property<int>("ShoppingCartItemId")
@@ -233,28 +248,6 @@ namespace DaGrasso.Migrations
                     b.HasKey("PizzaId");
 
                     b.ToTable("Pizzas");
-                });
-
-            modelBuilder.Entity("DaGrasso.PizzaToppings", b =>
-                {
-                    b.Property<int>("PizzaToppingsId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<int>("PizzaId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ToppingId")
-                        .HasColumnType("int");
-
-                    b.HasKey("PizzaToppingsId");
-
-                    b.HasIndex("PizzaId");
-
-                    b.HasIndex("ToppingId");
-
-                    b.ToTable("PizzaToppings");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -407,16 +400,7 @@ namespace DaGrasso.Migrations
                     b.Navigation("Pizza");
                 });
 
-            modelBuilder.Entity("DaGrasso.Data.Models.ShoppingCartItem", b =>
-                {
-                    b.HasOne("DaGrasso.Pizza", "Pizza")
-                        .WithMany()
-                        .HasForeignKey("PizzaId");
-
-                    b.Navigation("Pizza");
-                });
-
-            modelBuilder.Entity("DaGrasso.PizzaToppings", b =>
+            modelBuilder.Entity("DaGrasso.Data.Models.PizzaTopping", b =>
                 {
                     b.HasOne("DaGrasso.Pizza", "Pizza")
                         .WithMany("Toppings")
@@ -433,6 +417,15 @@ namespace DaGrasso.Migrations
                     b.Navigation("Pizza");
 
                     b.Navigation("Topping");
+                });
+
+            modelBuilder.Entity("DaGrasso.Data.Models.ShoppingCartItem", b =>
+                {
+                    b.HasOne("DaGrasso.Pizza", "Pizza")
+                        .WithMany()
+                        .HasForeignKey("PizzaId");
+
+                    b.Navigation("Pizza");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

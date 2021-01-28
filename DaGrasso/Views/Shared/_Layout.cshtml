@@ -38,6 +38,13 @@
                         </li>
                      </ul>
                     }
+                    @if (signInManager.IsSignedIn(User) && User.IsInRole("Chef"))
+                    {<ul>
+                         <li class="nav-item">
+                             <a class="nav-link text-dark" asp-action="Index" asp-controller="Chef">Kitchen</a>
+                         </li>
+                     </ul>
+                    }
                     <ul class="navbar-nav flex-grow-1">
                           @await Component.InvokeAsync("ShoppingCartSummary")
                     </ul>
