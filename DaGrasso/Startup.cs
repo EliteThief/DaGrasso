@@ -33,13 +33,13 @@ namespace DaGrasso
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<AppDbContext>(options =>
-                 options.UseSqlServer(_configurationRoot.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(_configurationRoot.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>
                     (options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<AppDbContext>();
             services.AddControllersWithViews();
-           
+
 
 
             services.Configure<IdentityOptions>(options =>
@@ -62,7 +62,26 @@ namespace DaGrasso
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped(sp => ShoppingCart.GetCart(sp));
 
-            services.AddControllersWithViews();
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("DeleteRolePolicy", policy =>
+                    policy.RequireClaim("Delete Role"));
+            });
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("EditRolePolicy", policy =>
+                    policy.RequireClaim("Edit Role"));
+            });
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("CreateRolePolicy",
+                    policy =>
+                        policy.RequireClaim("Create Role"));
+            });
+
+
+        services.AddControllersWithViews();
             services.AddMemoryCache();
             services.AddSession();
         }

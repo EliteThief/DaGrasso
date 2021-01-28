@@ -9,42 +9,63 @@
 {
     <table class="table-bordered table-striped ">
         <thead>
-            <tr>
+        <tr>
             <th class="">Role Id</th>
             <th >Role Name</th>
-            </tr>
+        </tr>
         </thead>
         <tbody>
-            @foreach (var role in Model)
-            {
-                <tr>
-                    <td>@role.Id</td>
-                    <td>@role.Name</td>
+        @foreach (var role in Model)
+        {
+            <tr>
+                <td>@role.Id</td>
+                <td>@role.Name</td>
+                <td>
+                    <a class="btn btn-primary" asp-action="EditRole" asp-controller="Admin"
+                       asp-route-id="@role.Id">
+                        Edit
+                    </a>
+                </td>
+                    
+                @if ((await authorizationService.AuthorizeAsync(User, "DeleteRolePolicy")).Succeeded)
+                {
                     <td>
-                        <a class="btn btn-primary" asp-action="EditRole" asp-controller="Admin"
-                           asp-route-id="@role.Id">
-                            Edit
+                        <a class="btn btn-danger" onclick="confirm('Are you sure you want delete this role?')"
+                           asp-action="DeleteRole" asp-controller="Admin" asp-route-id="@role.Id">
+                            Delete
                         </a>
                     </td>
-                </tr>
-            }
+                }
+            </tr>
+        }
         </tbody>
     </table>
+   <a class="btn btn-primary" style="width: auto"
+    asp-controller="Admin" asp-action="CreateRole">
+                                      Create Role
+                                             </a>
 }
 else
 {
-    <div class="card">
-        <div class="card-header">
-            No Roles Created
+    @if ((await authorizationService.AuthorizeAsync(User, "CreateRolePolicy")).Succeeded)
+    {
+        <div class="card">
+            <div class="card-header">
+                No Roles Created
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">
+                    Use the button to create a role
+                </h5>
+                <a class="btn btn-primary" style="width: auto"
+                   asp-controller="Admin" asp-action="CreateRole">
+                    Create Role
+                </a>
+            </div>
         </div>
-        <div class="card-body">
-            <h5 class="card-title">
-                Use the button to create a role
-            </h5>
-            <a class="btn btn-primary" style="width: auto"
-               asp-controller="Admin" asp-action="CreateRole">
-                Create Role
-            </a>
-        </div>
-    </div>
+    }
+    else
+    {
+        <h5>Access to create is Denied</h5>
+    }
 }
