@@ -1,12 +1,14 @@
 ﻿@model List<DaGrasso.Pizza>
 <div>
-    <h2>All Pizzas that we currently have </h2>
+    <h2 class="text-center">All Pizzas that we currently have </h2>
 </div>
-@{
-    foreach (var pizza in Model)
-    {
+<div class="row mx-auto position-static px-1"  style="width: 90%;">
+    @{
+        foreach (var pizza in Model)
+        {
 
-        @await Html.PartialAsync("PizzaSummary", pizza)
+            @await Html.PartialAsync("PizzaSummary", pizza)
 
+        }
     }
-}
+</div>
