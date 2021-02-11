@@ -5,15 +5,33 @@ using System.Collections.Generic;
 using System.Linq;
 using DaGrasso.Data.Models;
 using Microsoft.AspNetCore.Identity;
-
+using System.Threading.Tasks;
 
 namespace DaGrasso
 {
     public class DbInitializer
     {
-        public static async System.Threading.Tasks.Task SeedAsync(IServiceProvider applicationBuilder)
+        public static void SeedUser (UserManager<ApplicationUser> userManager)
         {
-            AppDbContext context = applicationBuilder.GetRequiredService<AppDbContext>();
+            if (userManager.FindByEmailAsync("admin@admin.com").Result == null)
+            {
+                ApplicationUser user = new ApplicationUser()
+                {
+                    UserName = "Admin@admin.com",
+                    Email = "Admin@admin.com"
+                };
+
+                IdentityResult result = userManager.CreateAsync(user, "admin").Result;
+
+                if (result.Succeeded)
+                {
+                    userManager.AddToRoleAsync(user, "Admin").Wait();
+                }
+            }
+        }
+        public static async Task SeedAsync(IServiceProvider applicationBuilder)
+        {
+            DagrassoContext context = applicationBuilder.GetRequiredService<DagrassoContext>();
             
 
             Topping sosPomidorowy = new Topping { Name = "Sos Pomidorowy" };
@@ -26,6 +44,8 @@ namespace DaGrasso
             Topping Oliwki = new Topping { Name = "Oliwki" };
             Topping Cukinia = new Topping { Name = "Cukinia" };
             Topping Ananas = new Topping { Name = "Ananas" };
+
+            
 
             if (!context.Toppings.Any())
             {
@@ -165,6 +185,8 @@ namespace DaGrasso
                     Topping = Ananas,
                 }
             };
+
+            
 
             if (!context.Pizzas.Any())
             {

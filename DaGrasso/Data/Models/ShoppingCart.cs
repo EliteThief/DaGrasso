@@ -10,10 +10,9 @@ namespace DaGrasso.Data.Models
 {
     public class ShoppingCart
     {
-        private readonly AppDbContext _appDbContext;
-        public ShoppingCart(AppDbContext appDbContext)
+        private readonly DagrassoContext _appDbContext;
+        public ShoppingCart(DagrassoContext appDbContext)
         {
-
             _appDbContext = appDbContext;
         }
         public string ShoppingCartId { get; set; }
@@ -25,7 +24,7 @@ namespace DaGrasso.Data.Models
             ISession session = services.GetRequiredService<IHttpContextAccessor>()?
                 .HttpContext.Session;
 
-            var context = services.GetService<AppDbContext>();
+            var context = services.GetService<DagrassoContext>();
             string cartId = session.GetString("CartId") ?? Guid.NewGuid().ToString();
 
             session.SetString("CartId", cartId);

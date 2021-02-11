@@ -8,8 +8,8 @@ namespace DaGrasso.Data.Repositories
 {
     public class ToppingRepository : IToppingRepository
     {
-        private readonly AppDbContext _appDbContext;
-        public ToppingRepository(AppDbContext appDbContext)
+        private readonly DagrassoContext _appDbContext;
+        public ToppingRepository(DagrassoContext appDbContext)
         {
             _appDbContext = appDbContext;
         }

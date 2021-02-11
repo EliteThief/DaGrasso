@@ -4,14 +4,16 @@ using DaGrasso;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DaGrasso.Migrations
 {
     [DbContext(typeof(DagrassoContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210210184327_ZmianaNazwy")]
+    partial class ZmianaNazwy
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -275,15 +277,6 @@ namespace DaGrasso.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "b1c4f6de-6c28-45fe-96f8-623455da2662",
-                            ConcurrencyStamp = "de70d53f-1fb9-4f2f-b067-d135d13a91fa",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

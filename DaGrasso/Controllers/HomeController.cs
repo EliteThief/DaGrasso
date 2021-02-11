@@ -10,10 +10,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DaGrasso.Controllers
 {
-    public class HomeController : Microsoft.AspNetCore.Mvc.Controller
+    public class HomeController : Controller
     {
-        private readonly AppDbContext _context;
-        private readonly ILogger<HomeController> _logger;
+        private readonly DagrassoContext _context;
         private readonly IPizzaRepository _pizzaRepository;
         private readonly IToppingRepository _toppingRepository;
 
@@ -21,14 +20,13 @@ namespace DaGrasso.Controllers
         public HomeController(ILogger<HomeController> logger,
             IPizzaRepository pizzaRepository,
             IToppingRepository toppingRepository,
-            AppDbContext context)
+            DagrassoContext context)
         {
-            _logger = logger;
             _pizzaRepository = pizzaRepository;
             _toppingRepository = toppingRepository;
             _context = context;
         }
-
+        [Route("/")]
         public ViewResult Index()
         {
             List<PizzaViewModel> pizzasView = new List<PizzaViewModel>();

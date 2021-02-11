@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DaGrasso.Migrations
 {
-    [DbContext(typeof(AppDbContext))]
+    [DbContext(typeof(DagrassoContext))]
     [Migration("20210128125140_Init")]
     partial class Init
     {

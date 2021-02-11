@@ -9,11 +9,11 @@ namespace DaGrasso.Data.Repositories
 {
     public class OrderRepository : IOrderRepository
     {
-        private readonly AppDbContext _appDbContext;
+        private readonly DagrassoContext _appDbContext;
         private readonly ShoppingCart _shoppingCart;
 
 
-        public OrderRepository(AppDbContext appDbContext, ShoppingCart shoppingCart)
+        public OrderRepository(DagrassoContext appDbContext, ShoppingCart shoppingCart)
         {
             _appDbContext = appDbContext;
             _shoppingCart = shoppingCart;

@@ -8,9 +8,9 @@ namespace DaGrasso.Data.Repositories
 {
     public class ChefOrderRepository
     {
-        private readonly AppDbContext _appDbContext;
+        private readonly DagrassoContext _appDbContext;
 
-        public ChefOrderRepository(AppDbContext appDbContext,OrderRepository orderRepository)
+        public ChefOrderRepository(DagrassoContext appDbContext,OrderRepository orderRepository)
         {
             _appDbContext = appDbContext;
         }

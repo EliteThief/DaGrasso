@@ -3,12 +3,13 @@ using Microsoft.EntityFrameworkCore;
 using DaGrasso.Data.Models;
 using DaGrasso.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace DaGrasso
 {
-    public class AppDbContext : IdentityDbContext<ApplicationUser>
+    public class DagrassoContext : IdentityDbContext<ApplicationUser>
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+        public DagrassoContext(DbContextOptions<DagrassoContext> options) : base(options)
         {
         }
 
@@ -33,6 +34,7 @@ namespace DaGrasso
                 .WithMany(t => t.Pizzas)
                 .HasForeignKey(pt => pt.ToppingId);
 
+            modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole { Name = "Admin", NormalizedName = "Admin".ToUpper() });
         }
     }
 }

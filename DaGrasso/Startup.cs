@@ -32,14 +32,26 @@ namespace DaGrasso
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AppDbContext>(options =>
-                options.UseSqlServer(_configurationRoot.GetConnectionString("DefaultConnection")));
+            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")
+            {
+                services.AddDbContext<DagrassoContext>(options =>
+                    options.UseSqlServer(_configurationRoot.GetConnectionString("DagrassoContextProd")));
+            }
+            else
+            { 
+                services.AddDbContext<DagrassoContext>(options => 
+                    options.UseSqlServer(_configurationRoot.GetConnectionString("DagrassoContext")));
+            }
+            services.BuildServiceProvider().GetService<DagrassoContext>().Database.Migrate();
+
 
             services.AddIdentity<ApplicationUser, IdentityRole>
                     (options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<AppDbContext>();
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<DagrassoContext>();
             services.AddControllersWithViews();
 
+            
 
 
             services.Configure<IdentityOptions>(options =>
@@ -80,13 +92,13 @@ namespace DaGrasso
             });
 
 
-        services.AddControllersWithViews();
+            services.AddControllersWithViews();
             services.AddMemoryCache();
             services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider, UserManager<ApplicationUser> userManager)
         {
             if (env.IsDevelopment())
             {
@@ -125,6 +137,7 @@ namespace DaGrasso
 
             });
             DbInitializer.SeedAsync(serviceProvider);
+            DbInitializer.SeedUser(userManager);
 
         }
     }

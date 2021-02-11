@@ -17,11 +17,11 @@ namespace DaGrasso.Controllers
     [Authorize(Roles="Chef")]
     public class Chef : Controller
     {
-        private readonly AppDbContext _context;
+        private readonly DagrassoContext _context;
         private readonly IPizzaRepository _pizzaRepository;
         private readonly IToppingRepository _toppingRepository;
 
-        public Chef(AppDbContext context,IPizzaRepository pizzaRepository,IToppingRepository toppingRepository)
+        public Chef(DagrassoContext context,IPizzaRepository pizzaRepository,IToppingRepository toppingRepository)
         {
             _context = context;
             _pizzaRepository = pizzaRepository;
@@ -30,9 +30,11 @@ namespace DaGrasso.Controllers
 
         public ViewResult Index()
         {
-            var result = _context.OrderDetails.Include(x => x.Pizza).Include(x => x.Order).ToList();  
+            var result = _context.OrderDetails
+                .Include(x => x.Pizza)
+                .Include(x => x.Order)
+                .ToList();  
             
-
             return View(result);
         }
 

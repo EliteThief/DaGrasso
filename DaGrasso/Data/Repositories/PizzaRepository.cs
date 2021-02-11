@@ -6,8 +6,8 @@ namespace DaGrasso.Data.Repositories
 {
     public class PizzaRepository : IPizzaRepository
     {
-        private readonly AppDbContext _appDbContext;
-        public PizzaRepository(AppDbContext appDbContext)
+        private readonly DagrassoContext _appDbContext;
+        public PizzaRepository(DagrassoContext appDbContext)
         {
             _appDbContext = appDbContext;
         }
