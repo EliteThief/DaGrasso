@@ -1,10 +1,9 @@
-﻿@model DaGrasso.Pizza
+﻿
+    <div class="col-sm-5 mx-auto rounded my-1 " style="background-color: #ffe7c2;
+    ">
+        <img class="float-left" src="~/Images/@Model.ImageURL" style="width: 25%"; />
+        <div class="p-2 m-auto float-left">
 
-<div class="row gx-5 bg-light text-black-50">
-    <div class="d-sm-inline-flex ">
-        <img src="~/Images/@Model.ImageURL" />
-        <div class="p-2 m-auto">
-            
             <h4>@Model.Name</h4>
             <p>Price: @Model.Price.ToString("c")</p>
             @foreach (var topping in Model.Toppings)
@@ -13,7 +12,7 @@
             }
 
         </div>
-        <div class="addToCart text-right">
+        <div class="addToCart text-right p-2 my-5">
             <p class="button">
                 <a class="btn btn-success" id="cartButton"
                    asp-controller="ShoppingCart"
@@ -24,6 +23,4 @@
             </p>
         </div>
     </div>
-</div>
-
 
