@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="icon" href="~/favicon.ico"/>
 </head>
 <body>
     <header>
@@ -14,7 +15,7 @@
                 <div class="bg-success">
                     <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/Images/Pizza_erdia.png" alt="Picca" width="50" height="50" /></a>
                 </div>
-                <a class="navbar-brand bg-success text-white" asp-area="" asp-controller="Home" asp-action="Index">Legato</a>
+                <a class="navbar-brand bg-success text-white p-1" asp-area="" asp-controller="Home" asp-action="Index" style="font-family: 'Brush Script MT', cursive; font-size: 2em;">Legato</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" 
                         aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -51,7 +52,7 @@
                     <ul class="navbar-nav flex-grow-1">
                           @await Component.InvokeAsync("ShoppingCartSummary")
                     </ul>
-                    <ul class="nav navbar-nav">
+                    <ul class="nav navbar">
                         <li class="nav-item">
                             <partial name="LoginInfo" />
                         </li>
@@ -60,6 +61,7 @@
             </div>
         </nav>
     </header>
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()

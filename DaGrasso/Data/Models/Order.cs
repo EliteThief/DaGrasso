@@ -13,35 +13,40 @@ namespace DaGrasso.Data.Models
         public List<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
 
         [Display(Name ="First Name")]
-        [Required(ErrorMessage = "Podaj swoje imie")]
+        [Required(ErrorMessage = "Enter your first name")]
         public string FirstName { get; set; }
 
-        [Required(ErrorMessage = "Podaj swoje nazwisko")]
+        [Display(Name = "Last Name")]
+        [Required(ErrorMessage = "Enter your last name")]
         [StringLength(30,MinimumLength = 2)]
         public string LastName { get; set; }
 
-        [Required(ErrorMessage = "Podaj nazwe ulicy")]
+        [Display(Name = "Street")]
+        [Required(ErrorMessage = "Enter your street")]
         [StringLength(50)]
         public string Street { get; set; }
 
-        [Required(ErrorMessage = "Podaj swój adres")]
+        [Display(Name = "Building number")]
+        [Required(ErrorMessage = "Enter your bilding number")]
         [StringLength(50)]
         public string BuildingNumber { get; set; }
 
+        [Display(Name = "House number")]
         public string HouseNumber { get; set; }
 
-        [Required(ErrorMessage = "Podaj kod pocztowy")]
+
+        [Required(ErrorMessage = "Enter your zip code")]
         [Display (Name ="Zip Code")]
         [StringLength(10,MinimumLength = 4)]
         public string ZipCode { get; set; }
 
-        [Required(ErrorMessage = "Podaj swoj nr telefonu")]
+        [Required(ErrorMessage = "Enter your phone number")]
         [StringLength(14)]
         [DataType(DataType.PhoneNumber)]
         [Display(Name = "Phone number")]
         public string PhoneNumber { get; set; }
 
-        [Required(ErrorMessage ="Podaj swoj adres e-mail")]
+        [Required(ErrorMessage ="Enter your e-mail")]
         [StringLength(50)]
         [DataType(DataType.EmailAddress)]
         [RegularExpression(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$")]

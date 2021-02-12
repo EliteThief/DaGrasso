@@ -35,7 +35,7 @@ namespace DaGrasso.Controllers
             _shoppingCart.ShoppingCartItems = items;
             if(_shoppingCart.ShoppingCartItems.Count == 0)
             {
-                ModelState.AddModelError("", "Twoj Koszyk jest pusty, Dodaj Pizze");
+                ModelState.AddModelError("", "Your Shopping Cart is empty. Add some pizzas!");
             }
             if (ModelState.IsValid) 
             {
@@ -49,7 +49,7 @@ namespace DaGrasso.Controllers
 
         public IActionResult CheckoutComplete()
         {
-            ViewBag.CheckoutCompleteMessage = "Dziekuje za zamównienie w naszym lokalu";
+            ViewBag.CheckoutCompleteMessage = "Thenk you for choosing our retaurant!";
             return View();
         }
     }
