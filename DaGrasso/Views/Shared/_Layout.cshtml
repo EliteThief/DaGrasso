@@ -24,19 +24,20 @@
                         </li>
                     </ul>
                     @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
-                    {<ul>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                               aria-haspopup="true" aria-expanded="False"> 
-                                Manage
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" asp-controller="Admin" asp-action="ListRoles">Roles</a>
-                                <a class="dropdown-item" asp-controller="Admin" asp-action="ListUsers">Users</a>
+                    {
+                        <ul>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                                   aria-haspopup="true" aria-expanded="False">
+                                    Manage
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item" asp-controller="Admin" asp-action="ListRoles">Roles</a>
+                                    <a class="dropdown-item" asp-controller="Admin" asp-action="ListUsers">Users</a>
 
-                            </div>
-                        </li>
-                     </ul>
+                                </div>
+                            </li>
+                        </ul>
                     }
                     @if (signInManager.IsSignedIn(User) && User.IsInRole("Chef"))
                     {<ul>

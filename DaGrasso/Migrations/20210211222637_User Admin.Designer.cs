@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DaGrasso.Migrations
 {
     [DbContext(typeof(DagrassoContext))]
-    [Migration("20210211221807_User Hardcoded")]
-    partial class UserHardcoded
+    [Migration("20210211222637_User Admin")]
+    partial class UserAdmin
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -281,8 +281,8 @@ namespace DaGrasso.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "b1c4f6de-6c28-45fe-96f8-623455da2662",
-                            ConcurrencyStamp = "de70d53f-1fb9-4f2f-b067-d135d13a91fa",
+                            Id = "20d9ed4e-b0e8-449d-b937-7c3d90b722c2",
+                            ConcurrencyStamp = "b00e522b-6f50-48f9-b6e0-efb17ec31960",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });

@@ -14,7 +14,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DaGrasso.Controllers
 {
-    [Authorize(Roles="Chef")]
+    [Authorize(Roles="Chef,Admin")]
     public class Chef : Controller
     {
         private readonly DagrassoContext _context;

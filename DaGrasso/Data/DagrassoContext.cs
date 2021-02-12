@@ -33,6 +33,7 @@ namespace DaGrasso
                 .HasOne(pt => pt.Topping)
                 .WithMany(t => t.Pizzas)
                 .HasForeignKey(pt => pt.ToppingId);
+            
 
             modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole { Name = "Admin", NormalizedName = "Admin".ToUpper() });
         }
